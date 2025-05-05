@@ -7,7 +7,7 @@ import os
 app = Flask(__name__)
 
 # ✅ OpenAI API 키 설정 (환경 변수에서 가져옴)
-openai.api_key = os.environ.get("OPENAI_API_KEY")
+openai.api_key = os.environ.get("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")
 
 # ✅ 현재 대화 저장 DB
 def init_db():
@@ -76,11 +76,13 @@ def chat():
 
         user_message = data.get("message", "").strip()
 
+        # 🔍 1단계: 쫑서 DB 먼저 검색
         db_response = find_similar_response(user_message)
         if db_response:
             save_chat(user_message, db_response)
             return jsonify({"reply": db_response})
 
+        # 🤖 2단계: GPT 호출
         recent_chats = get_recent_chats()
 
         response = openai.ChatCompletion.create(
@@ -96,8 +98,3 @@ def chat():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
-if __name__ == "__main__":
-    init_db()
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)

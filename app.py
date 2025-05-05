@@ -70,14 +70,17 @@ def chat():
         if not data or "message" not in data:
             return jsonify({"error": "'message' 키가 필요해요."}), 400
 
-        user_message = data["message"].strip()
+        user_message = data.get("message", "").strip()
 
+        # 🔍 1단계: 쫑서 DB 먼저 검색
         db_response = find_similar_response(user_message)
         if db_response:
             save_chat(user_message, db_response)
             return jsonify({"reply": db_response})
 
+        # 🤖 2단계: GPT 호출
         recent_chats = get_recent_chats()
+
         response = openai.ChatCompletion.create(
             model="gpt-4",
             messages=[

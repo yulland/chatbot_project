@@ -2,11 +2,12 @@ from flask import Flask, request, jsonify
 import openai
 import sqlite3
 import difflib
+import os
 
 app = Flask(__name__)
 
-# ✅ OpenAI 클라이언트 생성
-client = OpenAI(api_key="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")  # ← 여기 API 키 넣기!
+# ✅ OpenAI API 키 설정 (환경 변수에서 가져옴)
+openai.api_key = os.environ.get("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")
 
 # ✅ 현재 대화 저장 DB
 def init_db():
@@ -77,7 +78,6 @@ def chat():
 
         # 🤖 2단계: GPT 호출
         recent_chats = get_recent_chats()
-        openai.api_key = os.environ.get("OPENAI_API_KEY")  # Render 환경변수 사용
 
         response = openai.ChatCompletion.create(
             model="gpt-4",
@@ -94,8 +94,6 @@ def chat():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
-    import os
     init_db()
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
-

@@ -1,0 +1,32 @@
+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
+
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDvV8DhI0Oj2naRd7jyaDAtTN1ITshX4toMXes00h9RbPxLZcSaRdegG+xdakx2FTr0XhdAr9W6oAfDH1SssnzA1Czv9I2O24+m2Wt1ERS8IrIvHHWV+Ue9f0z8QS6yhLU31GfUGrqY0jSDTxNF7um3wmI2di3E6uK/dvSXE6EeRldgEvG7A+8Et3gEL/3OaSxly3BV7xO1IP4n2kEZ9tzs/eSlIVdxpBTjl3hSw91aoFxUYB8YxpSSLBVaGswf/Yaksmg89xWko25QaZxEFvlUMnwml+b2Grs0Gy4Mt/Q7b0mUDketJoAPCh5KnS+jw8sX5GZVaE41g/CBY/3gxuSb2dwwIPaSnnEPObt52ZwMNt1WOKYbXmnan/JzIGg2zJlfW8CzMWsI+COsCTk+glyqvN7wmJsvVWJZdHumvQMFB56XDmCo6Dy7fI4GG2BPt1ioW2QWPxG2WK5Me1sZY8jC8kVIoI87y6mOpCiN3nN3m0FGzfW39nvQGfb8/WmiJJc= kidy0@다율띠
+
+
+[컴터실행1]
+Flask 서버 실행
+터미널(명령 프롬프트)에서 app.py가 있는 폴더로 이동: cd chatbot_project
+Flask 서버 실행: python app.py
+실행되면 아래와 같은 메시지가 나오면 성공: * Running on http://127.0.0.1:5000
+
+[컴터실행2]
+1. cd my-star-chat
+2. npx expo start
+
+[컴터실행3]-오라클 서버 설정전 ip주소세팅
+1. ngrok http 5000
+2. 뜨는 서버 주소
+C:\Users\kidy0\my-star-chat\app\(tabs) index.tsx 안에 수정 후 저장
+
+
+ssh -i "C:\Users\kidy0\.ssh/id_rsa.pem opc"@140.245.68.157
+
+ssh -i "C:\Users\kidy0\.ssh\id_rsa.pem" opc@140.245.68.157
+
+
+
+[오라클 서버실행]
+scp -i ~/.ssh/id_rsa.pem -r ./chatbot_project opc@140.245.78.27:/home/opc/
+
+
+cd chatbot_project

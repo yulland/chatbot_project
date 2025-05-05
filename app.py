@@ -66,12 +66,12 @@ def init():
     init_db()
     return "DB initialized!", 200
 
-@app.route("/chat", methods=["POST"])
-def chat():
-    try:
-        data = request.json
-        if not data or "message" not in data:
-            return jsonify({"error": "'message' 키가 필요해요."}), 400
+#@app.route("/chat", methods=["POST"])
+#def chat():
+  #  try:
+   #     data = request.json
+    #    if not data or "message" not in data:
+     #       return jsonify({"error": "'message' 키가 필요해요."}), 400
 
         user_message = data.get("message", "").strip()
 

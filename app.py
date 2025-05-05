@@ -56,12 +56,6 @@ def find_similar_response(user_input):
 
     return best_match if highest_ratio > 0.6 else None
 
-# ✅ DB 초기화용 라우트 (최초 1회만 호출!)
-@app.route("/init", methods=["GET"])
-def init():
-    init_db()
-    return "DB initialized!", 200
-
 # ✅ 본격 대화 라우트
 @app.route("/chat", methods=["POST"])
 def chat():

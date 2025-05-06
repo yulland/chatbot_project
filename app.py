@@ -6,8 +6,10 @@ import os
 
 app = Flask(__name__)
 
-openai.api_key = os.environ.get("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")  # 환경 변수 키 이름도 수정!
+# ✅ OpenAI API 키 설정 (환경 변수에서 가져옴)
+openai.api_key = os.environ.get("OPENAI_API_KEY")
 
+# ✅ 현재 대화 저장 DB
 def init_db():
     conn = sqlite3.connect("chat_history.db")
     cursor = conn.cursor()
@@ -28,6 +30,7 @@ def save_chat(user_message, bot_reply):
     conn.commit()
     conn.close()
 
+# ✅ 최근 대화 불러오기
 def get_recent_chats(limit=5):
     conn = sqlite3.connect("chat_history.db")
     cursor = conn.cursor()
@@ -39,6 +42,7 @@ def get_recent_chats(limit=5):
         for i, chat in enumerate(reversed(chats))
     ]
 
+# ✅ 쫑서 DB에서 유사한 응답 찾기
 def find_similar_response(user_input):
     conn = sqlite3.connect("chat_memory.db")
     cursor = conn.cursor()
@@ -56,7 +60,13 @@ def find_similar_response(user_input):
 
     return best_match if highest_ratio > 0.6 else None
 
-# ✅ 본격 대화 라우트
+# ✅ DB 초기화 엔드포인트
+@app.route("/init", methods=["GET"])
+def init():
+    init_db()
+    return "DB initialized!", 200
+
+# ✅ 챗봇 API
 @app.route("/chat", methods=["POST"])
 def chat():
     try:
@@ -66,13 +76,11 @@ def chat():
 
         user_message = data.get("message", "").strip()
 
-        # 🔍 1단계: 쫑서 DB 먼저 검색
         db_response = find_similar_response(user_message)
         if db_response:
             save_chat(user_message, db_response)
             return jsonify({"reply": db_response})
 
-        # 🤖 2단계: GPT 호출
         recent_chats = get_recent_chats()
 
         response = openai.ChatCompletion.create(

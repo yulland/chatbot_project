@@ -7,7 +7,7 @@ import os
 app = Flask(__name__)
 
 # ✅ OpenAI API 키 설정 (환경 변수에서 가져옴)
-openai.api_key = os.environ.get("OPENAI_API_KEY")
+openai.api_key = os.environ.get("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")
 
 # ✅ 현재 대화 저장 DB
 def init_db():
